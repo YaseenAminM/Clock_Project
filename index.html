@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+      }
+      .clock-container {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: royalblue;
+      }
+      .clock {
+        background-color: rgb(71, 71, 71);
+        width: 300px;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        border-radius: 100%;
+        position: relative;
+      }
+      .hand {
+        position: absolute;
+        transform-origin: bottom;
+        height: 50%;
+      }
+      .second-hand {
+        width: 1px;
+        background-color: rgb(255, 0, 0);
+      }
+      .minute-hand {
+        width: 2px;
+        background-color: rgb(0, 0, 0);
+      }
+      .hour-hand {
+        width: 6px;
+        background-color: rgb(0, 0, 0);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="clock-container">
+      <div class="clock">
+        <div class="hand second-hand"></div>
+        <div class="hand minute-hand"></div>
+        <div class="hand hour-hand"></div>
+      </div>
+    </div>
+    <script>
+      const updateClock = () => {
+        const now = new Date();
+        const seconds = now.getSeconds();
+        const minutes = now.getMinutes();
+        const hours = now.getHours() % 12; // Use modulo to convert 24-hour format to 12-hour format
+
+        rotateHand(".second-hand", seconds * 6);
+        rotateHand(".minute-hand", (minutes + seconds / 60) * 6);
+        rotateHand(".hour-hand", (hours + minutes / 60) * 30);
+      };
+
+      const rotateHand = (selector, degrees) => {
+        const hand = document.querySelector(selector);
+        hand.style.transform = `rotate(${degrees}deg)`;
+      };
+
+      setInterval(updateClock, 1000);
+      updateClock(); // Initial update
+    </script>
+  </body>
+</html>
